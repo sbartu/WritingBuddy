@@ -1,11 +1,10 @@
 body {
-    background-color: #DCE2E5;
+    /* background-color: #DCE2E5; */
     padding-top: 56px;
 }
 
-
-li a {
-    color: green;
+.card-header.inner {
+    background-color: #423D47;
 }
 
 /* #423D47 */
