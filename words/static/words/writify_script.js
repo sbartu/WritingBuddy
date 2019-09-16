@@ -1,15 +1,9 @@
 var resultView = new Vue({
+  delimiters: ['[[', ']]'],
   el: '#app',
   data: {
-    index : 0,
-    artist_count: 0,
-    json_urban: null,
-    urban_display: {},
-    new_display: null,
-    counter: 0,
-    show: false,
-    activeButton: 'btn btn-success',
-    deadButton: 'btn btn-secondary',
+    json_urban: [],
+    urban_display: [],
   },
   methods: {
     search_urban_dic (e) {
@@ -26,11 +20,9 @@ var resultView = new Vue({
         axios
           .get(url, {params, headers})
           .then(response => {
-            this.json_urban = response.data;
+            this.json_urban = response.data.list;
             this.urban_display = this.json_urban;
-            // this.result_count = response.data.resultCount;
-            // this.genres["ALL"] = true;
-            console.log(response.data);
+            console.log(this.urban_display);
           })
           .catch(error => {
             console.log(error);
