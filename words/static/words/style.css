@@ -50,6 +50,19 @@ body {
   margin-bottom: 1%;
 }
 
+.bullets {
+  text-align: left;
+}
+
+.carousel-indicators li {
+  background-color: #999;
+  background-color: rgba(70, 70, 70, 0.25);
+}
+
+.carousel-indicators .active {
+  background-color: #444;
+}
+
 /* #423D47 */
 /* #909FAA */
 /* #DCE2E5 */
