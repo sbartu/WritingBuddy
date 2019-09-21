@@ -156,7 +156,7 @@
   </div>
   <div class="row disp">
     <div class="card my-11">
-      <h5 class="card-header">Slang</h5>
+      <h5 class="card-header">Slang Definitions</h5>
       <div class="card-body">
         <div id="carouselIndicators" class="carousel slide" data-interval="false">
           <ol class="carousel-indicators">
@@ -190,6 +190,18 @@
       </div>
     </div>
   </div>
+  <div class="row disp">
+    <div class="card my-11">
+      <h5 class="card-header">Rhyming Words</h5>
+      <div class="card-body">
+        <p v-if="rhymes_display.length === 0">Possible list of rhyming words will displayed here.</p>
+        <ul v-else>
+          <li v-for="item in rhymes_display">[[ item ]]</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
   <!-- /.container -->
   
   </div>
