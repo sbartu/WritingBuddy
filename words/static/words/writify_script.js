@@ -8,16 +8,22 @@ var resultView = new Vue({
     words_display: [],
     json_rhymes: [],
     rhymes_display: [],
+    urban_not_found: false,
+    words_not_found: false,
+    rhymes_not_found: false,
+    given_query: "",
   },
   methods: {
     search(e) {
       if(e.keyCode === 13) {
+        this.given_query = e.target.value;
         this.search_words(e);
         this.search_urban(e);
         this.search_rhymes(e);
       }
     },
     search_words (e) {
+      this.words_not_found = false;
       const query = e.target.value;
       const url = "https://wordsapiv1.p.rapidapi.com/words/" + query;
       const headers = {
@@ -27,14 +33,20 @@ var resultView = new Vue({
       axios
         .get(url, {headers})
         .then(response => {
-          this.json_words = response.data.results;
-          this.words_display = this.json_words;
+          if(response.data.results !== undefined) {
+            this.json_words = response.data.results;
+            this.words_display = this.json_words;
+          } else {
+            this.words_not_found = true;
+          }
         })
         .catch(error => {
+          this.words_not_found = true;
           console.log(error);
         })
     },
     search_urban (e) {
+      this.urban_not_found = false;
       const query = e.target.value;
       const url = "https://mashape-community-urban-dictionary.p.rapidapi.com/define";
       const headers = {
@@ -47,14 +59,21 @@ var resultView = new Vue({
       axios
         .get(url, {params, headers})
         .then(response => {
-          this.json_urban = response.data.list;
-          this.urban_display = this.json_urban;
+          if(response.data.list !== undefined && response.data.list.length !== 0) {
+            console.log(response.data)
+            this.json_urban = response.data.list;
+            this.urban_display = this.json_urban;
+          } else {
+            this.urban_not_found = true;
+          }
         })
         .catch(error => {
+          this.urban_not_found = true;
           console.log(error);
         })
     },
     search_rhymes (e) {
+      this.rhymes_not_found = false;
       const query = e.target.value;
       const url = "https://wordsapiv1.p.rapidapi.com/words/" + query + "/rhymes"
       const headers = {
@@ -64,10 +83,15 @@ var resultView = new Vue({
       axios
         .get(url, {headers})
         .then(response => {
-          this.json_rhymes = response.data.rhymes.all;
-          this.rhymes_display = this.json_rhymes;
+          if(response.data.rhymes.all !== undefined) {
+            this.json_rhymes = response.data.rhymes.all;
+            this.rhymes_display = this.json_rhymes;
+          } else {
+            this.rhymes_not_found = true;
+          }
         })
         .catch(error => {
+          this.rhymes_not_found = true
           console.log(error);
         })
     },
