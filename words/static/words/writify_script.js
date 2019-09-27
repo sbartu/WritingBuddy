@@ -11,11 +11,13 @@ var resultView = new Vue({
     urban_not_found: false,
     words_not_found: false,
     rhymes_not_found: false,
+    start: true,
     given_query: "",
   },
   methods: {
     search(e) {
       if(e.keyCode === 13) {
+        this.start = false;
         this.given_query = e.target.value;
         this.search_words(e);
         this.search_urban(e);
@@ -23,7 +25,7 @@ var resultView = new Vue({
       }
     },
     search_words (e) {
-      this.words_not_found = false;
+      
       const query = e.target.value;
       const url = "https://wordsapiv1.p.rapidapi.com/words/" + query;
       const headers = {
@@ -36,17 +38,18 @@ var resultView = new Vue({
           if(response.data.results !== undefined) {
             this.json_words = response.data.results;
             this.words_display = this.json_words;
+            this.words_not_found = false;
           } else {
             this.words_not_found = true;
           }
         })
         .catch(error => {
           this.words_not_found = true;
-          console.log(error);
         })
+        
     },
     search_urban (e) {
-      this.urban_not_found = false;
+
       const query = e.target.value;
       const url = "https://mashape-community-urban-dictionary.p.rapidapi.com/define";
       const headers = {
@@ -63,6 +66,7 @@ var resultView = new Vue({
             console.log(response.data)
             this.json_urban = response.data.list;
             this.urban_display = this.json_urban;
+            this.urban_not_found = false;
           } else {
             this.urban_not_found = true;
           }
@@ -73,7 +77,7 @@ var resultView = new Vue({
         })
     },
     search_rhymes (e) {
-      this.rhymes_not_found = false;
+
       const query = e.target.value;
       const url = "https://wordsapiv1.p.rapidapi.com/words/" + query + "/rhymes"
       const headers = {
@@ -86,6 +90,7 @@ var resultView = new Vue({
           if(response.data.rhymes.all !== undefined) {
             this.json_rhymes = response.data.rhymes.all;
             this.rhymes_display = this.json_rhymes;
+            this.rhymes_not_found = false;
           } else {
             this.rhymes_not_found = true;
           }
